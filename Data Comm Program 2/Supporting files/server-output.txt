@@ -1,0 +1,110 @@
+-----------------------------------------
+type: 1  seqnum: 0 length: 30
+data: Wow. Never ceases to amaze me.
+
+Expecting Rn: 0
+sn: 0
+type: 0  seqnum: 0 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 1 length: 30
+data:  What cologne you gonna go wit
+
+Expecting Rn: 1
+sn: 1
+type: 0  seqnum: 1 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 2 length: 30
+data: h? London Gentleman, or wait. 
+
+Expecting Rn: 2
+sn: 2
+type: 0  seqnum: 2 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 3 length: 30
+data: No, no, no. Hold on. Blackbear
+
+Expecting Rn: 3
+sn: 3
+type: 0  seqnum: 3 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 4 length: 30
+data: d's Delight. Brian, I'm gonna 
+
+Expecting Rn: 4
+sn: 4
+type: 0  seqnum: 4 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 5 length: 30
+data: be honest with you, that smell
+
+Expecting Rn: 5
+sn: 5
+type: 0  seqnum: 5 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 6 length: 30
+data: s like pure gasoline. They've 
+
+Expecting Rn: 6
+sn: 6
+type: 0  seqnum: 6 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 7 length: 30
+data: done studies, you know. 60% of
+
+Expecting Rn: 7
+sn: 7
+type: 0  seqnum: 7 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 0 length: 30
+data:  the time, it works every time
+
+Expecting Rn: 0
+sn: 0
+type: 0  seqnum: 0 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 1 length: 30
+data: . I saw that. Brick killed a g
+
+Expecting Rn: 1
+sn: 1
+type: 0  seqnum: 1 length: 0
+data: null
+
+-----------------------------------------
+type: 1  seqnum: 2 length: 29
+data: uy. Did you throw a trident?
+
+
+Expecting Rn: 2
+sn: 2
+type: 0  seqnum: 2 length: 0
+data: null
+
+-----------------------------------------
+type: 3  seqnum: 3 length: 0
+data: null
+
+Expecting Rn: 3
+sn: 3
+type: 2  seqnum: 3 length: 0
+data: null
+
+-----------------------------------------

@@ -6,10 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		5AF238DE1E73A0A400C0AAD9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AF238DD1E73A0A400C0AAD9 /* main.cpp */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		5AF238D81E73A0A400C0AAD9 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -24,7 +20,7 @@
 
 /* Begin PBXFileReference section */
 		5AF238DA1E73A0A400C0AAD9 /* Data Comm Program 2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Data Comm Program 2"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5AF238DD1E73A0A400C0AAD9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		5AF238E51E73A14200C0AAD9 /* Data Comm Program 2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Data Comm Program 2"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +37,7 @@
 		5AF238D11E73A0A400C0AAD9 = {
 			isa = PBXGroup;
 			children = (
-				5AF238DC1E73A0A400C0AAD9 /* Data Comm Program 2 */,
+				5AF238E51E73A14200C0AAD9 /* Data Comm Program 2 */,
 				5AF238DB1E73A0A400C0AAD9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +48,6 @@
 				5AF238DA1E73A0A400C0AAD9 /* Data Comm Program 2 */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		5AF238DC1E73A0A400C0AAD9 /* Data Comm Program 2 */ = {
-			isa = PBXGroup;
-			children = (
-				5AF238DD1E73A0A400C0AAD9 /* main.cpp */,
-			);
-			path = "Data Comm Program 2";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +107,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AF238DE1E73A0A400C0AAD9 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
