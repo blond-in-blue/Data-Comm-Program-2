@@ -1,0 +1,169 @@
+-----------------------------------------
+
+Host name: localhost
+IP address: 127.0.0.1 
+
+-----------------------------------------
+type: 1  seqnum: 0 length: 30
+data: Wow. Never ceases to amaze me.
+
+SB: 0
+NS: 1
+Number of outstanding packets: 1
+--------------------------------------
+type: 1  seqnum: 1 length: 30
+data:  What cologne you gonna go wit
+
+SB: 0
+NS: 2
+Number of outstanding packets: 2
+--------------------------------------
+type: 1  seqnum: 2 length: 30
+data: h? London Gentleman, or wait. 
+
+SB: 0
+NS: 3
+Number of outstanding packets: 3
+--------------------------------------
+type: 1  seqnum: 3 length: 30
+data: No, no, no. Hold on. Blackbear
+
+SB: 0
+NS: 4
+Number of outstanding packets: 4
+--------------------------------------
+type: 1  seqnum: 4 length: 30
+data: d's Delight. Brian, I'm gonna 
+
+SB: 0
+NS: 5
+Number of outstanding packets: 5
+--------------------------------------
+type: 1  seqnum: 5 length: 30
+data: be honest with you, that smell
+
+SB: 0
+NS: 6
+Number of outstanding packets: 6
+--------------------------------------
+type: 1  seqnum: 6 length: 30
+data: s like pure gasoline. They've 
+
+SB: 0
+NS: 7
+Number of outstanding packets: 7
+--------------------------------------
+type: 0  seqnum: 0 length: 0
+data: null
+
+SB: 1
+NS: 7
+Number of outstanding packets: 6
+--------------------------------------
+type: 1  seqnum: 7 length: 30
+data: done studies, you know. 60% of
+
+SB: 1
+NS: 0
+Number of outstanding packets: 7
+--------------------------------------
+type: 0  seqnum: 1 length: 0
+data: null
+
+SB: 2
+NS: 0
+Number of outstanding packets: 6
+--------------------------------------
+type: 1  seqnum: 0 length: 30
+data:  the time, it works every time
+
+SB: 2
+NS: 1
+Number of outstanding packets: 7
+--------------------------------------
+type: 0  seqnum: 2 length: 0
+data: null
+
+SB: 3
+NS: 1
+Number of outstanding packets: 6
+--------------------------------------
+type: 1  seqnum: 1 length: 30
+data: . I saw that. Brick killed a g
+
+SB: 3
+NS: 2
+Number of outstanding packets: 7
+--------------------------------------
+type: 0  seqnum: 3 length: 0
+data: null
+
+SB: 4
+NS: 2
+Number of outstanding packets: 6
+--------------------------------------
+type: 1  seqnum: 2 length: 29
+data: uy. Did you throw a trident?
+
+
+SB: 4
+NS: 3
+Number of outstanding packets: 7
+--------------------------------------
+type: 0  seqnum: 4 length: 0
+data: null
+
+SB: 5
+NS: 3
+Number of outstanding packets: 6
+--------------------------------------
+type: 0  seqnum: 5 length: 0
+data: null
+
+SB: 6
+NS: 3
+Number of outstanding packets: 5
+--------------------------------------
+type: 0  seqnum: 6 length: 0
+data: null
+
+SB: 7
+NS: 3
+Number of outstanding packets: 4
+--------------------------------------
+type: 0  seqnum: 7 length: 0
+data: null
+
+SB: 0
+NS: 3
+Number of outstanding packets: 3
+--------------------------------------
+type: 0  seqnum: 0 length: 0
+data: null
+
+SB: 1
+NS: 3
+Number of outstanding packets: 2
+--------------------------------------
+type: 0  seqnum: 1 length: 0
+data: null
+
+SB: 2
+NS: 3
+Number of outstanding packets: 1
+--------------------------------------
+type: 0  seqnum: 2 length: 0
+data: null
+
+SB: 3
+NS: 3
+Number of outstanding packets: 0
+--------------------------------------
+Sending EOT packet to server.
+type: 3  seqnum: 3 length: 0
+data: null
+
+type: 2  seqnum: 3 length: 0
+data: null
+
+EOT packet received. Exiting.--------------------------------------
