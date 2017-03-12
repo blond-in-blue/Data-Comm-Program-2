@@ -2,7 +2,7 @@
 //  server.cpp
 //  Data Comm Program 2
 //
-//  Created by Hunter Holder on 3/10/17.
+//  Created by Hunter Holder and Chandler Dill on 3/10/17.
 //  Copyright © 2017 Hunter Holder. All rights reserved.
 //
 
