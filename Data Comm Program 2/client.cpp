@@ -1,4 +1,10 @@
-using namespace std;
+//
+//  client.cpp
+//  Data Comm Program 2
+//
+//  Created by Hunter Holder and Chandler Dill on 3/10/17.
+//
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -14,13 +20,7 @@ using namespace std;
 #include <time.h>
 #include <unistd.h>
 #include <stdlib.h>
-//#######################################################################################################
-
-//Code written by Chandler Dill, crd248, for the class of Data Communications taught at Mississippi State University during Spring of 2017. This program is the client of a client/server interaction that creates a TCP socket, negotiates a random port, then transfers a datagram over UDP through that negotiated port.
-//Feb 10th, 2017
-
-//#######################################################################################################
-
+using namespace std;
 
 
 int main(int argc, char ** argv){
