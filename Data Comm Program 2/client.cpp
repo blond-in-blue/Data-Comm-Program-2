@@ -24,7 +24,7 @@ using namespace std;
 
 
 int main(int argc, char ** argv){
-	int mysocket = socket(AF_INET, SOCK_STREAM, 0);	//declares socket
+	int mysocket = socket(AF_INET, SOCK_DGRAM, 0);	//declares socket
 	int negotPort = atoi(argv[2]);
 	struct hostent *s;			//holds IP address
 	s = gethostbyname(argv[1]);
@@ -32,11 +32,9 @@ int main(int argc, char ** argv){
 	memset((char *) &server, 0, sizeof(server));		//setting Destination info
 	server.sin_family = AF_INET;
 	server.sin_port = htons(negotPort);
-	bcopy((char *)s->h_addr, (char *)&server.sin_addr.s_addr, s->h_length);
-	
+//	bcopy((char *)s->h_addr, (char *)&server.sin_addr.s_addr, s->h_length);
 	
 	connect(mysocket, (struct sockaddr *)&server, sizeof(server));
-	
 	
 	char * chunksArray;
 	int fileSize;				//open the file, grab the total length
@@ -50,13 +48,11 @@ int main(int argc, char ** argv){
 	fileSize = ftell(txtFile);		//then close the file, to be opened again
 	fclose(txtFile);
 	
-	
 	txtFile = fopen((argv[3]), "rb");
 	if (txtFile == NULL){				//open file for parsing the payload
 		cout << "Error, check file." << endl;
 		exit(1);
 	}
-	
 	
 	chunksArray = (char*) malloc (sizeof(char)*fileSize);
 	size_t results = fread(chunksArray, 4, 1, txtFile);
@@ -72,12 +68,10 @@ int main(int argc, char ** argv){
 		memset(chunksArray, '\0', sizeof(chunksArray));
 		results = fread(chunksArray, 4, 1, txtFile);
 	}
-	
-	
+
 	sendto(mysocket, chunksArray, 512, 0, (struct sockaddr *)&server, slen);
 	cout << chunksArray << std::flush;
 	sendto(mysocket, endOfArray, 512, 0, (struct sockaddr *)&server, slen);	//send the end of file signal
-	
 	
 	close(mysocket);
 	free(chunksArray);	//clean up of socket, buffer, and stream

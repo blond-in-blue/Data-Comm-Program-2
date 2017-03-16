@@ -24,27 +24,20 @@ using namespace std;
 int main(int argc, const char * argv[]) {
 	int mysocket = socket(AF_INET, SOCK_DGRAM, 0);	//setup UDP socket
 	int negotPort = atoi(argv[1]);
-	
 	struct sockaddr_in server;
-	memset((char *) &server, 0, sizeof(server));
-	
 	memset((char *) &server, 0, sizeof(server));
 	server.sin_family = AF_INET;
 	server.sin_port = htons(negotPort);		//UDP info and address handling
 	server.sin_addr.s_addr = htonl(INADDR_ANY);
 	
-	
 	bind(mysocket, (struct sockaddr *)&server, sizeof(server));
-	
 	
 	char textContents[512];
 	struct sockaddr_in client;		//setting up payload buffer and client variables
 	socklen_t clen = sizeof(client);
 	
-	
 	FILE * output;
 	output = fopen("output.txt", "w+");
-	
 	
 	while(strcmp(textContents,"EOF") != 0){		//loop through all packets recieved, then promptly uppercases them and send them back as acknowledgement
 		recvfrom(mysocket, textContents, 512, 0, (struct sockaddr *)&client, &clen);
