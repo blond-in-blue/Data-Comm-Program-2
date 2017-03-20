@@ -58,6 +58,7 @@ int main(int argc, char ** argv){
 		exit(EXIT_FAILURE);
 	}
 	
+	// set up connection
 	struct sockaddr_in destinationServer;
 	memset((char *) &destinationServer, 0, sizeof(destinationServer));		//setting destination info
 	destinationServer.sin_family = AF_INET;
