@@ -5,6 +5,7 @@
 //  Created by Hunter Holder and Chandler Dill on 3/10/17.
 //
 
+#include "packet.h"
 #include <cstdio>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -21,7 +22,6 @@
 #include <time.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "packet.h"
 using namespace std;
 
 #define N 7 // window size
@@ -75,8 +75,7 @@ int main(int argc, char ** argv){
 //	connect(mysocket, (struct sockaddr *)&destinationServer, sizeof(destinationServer));
 	
 	
-	// a bunch of variables t.k.
-	int sendSizeMin = 0;
+	// a bunch of variables, gg
 	int outstandingPackets = 0;
 	int nextSequenceNumber = 0;
 	int ackNumber = 0;
@@ -91,8 +90,7 @@ int main(int argc, char ** argv){
 	float packetTimerRecordedTime = 0.00;
 	char data[32] = "0";
 	char packet[128] = "0";
-	int packetSize = 0;
-	int characterSize = 0;
+	int fileSize = 0;
 	memset(data, 0, sizeof(data));
 	class packet receivingPacket(0, 0, 0, data);
 	class packet lastReceivingPacket(0, 0, 0, data);
@@ -100,27 +98,18 @@ int main(int argc, char ** argv){
 	
 	// sliding window stuff
 	int nextSequenceNumberSliding = 0;
-	int sendSizeMinSliding = 0;
+	int sendSizeMin = 0;
 	
 	
 	// file stuff
 	char * chunksArray;
-	int fileSize;				//open the file, grab the total length
 	FILE * txtFile;
 	txtFile = fopen((argv[4]), "rb");
 	if (txtFile == NULL){
-		cout << "Error, check file." << endl;
+		cout << "error: specified file couldn't be opened." << endl;
 		exit(1);
 	}
 	fseek(txtFile, 0, SEEK_END);
-	fileSize = ftell(txtFile);		//then close the file, to be opened again
-	fclose(txtFile);
-	
-	txtFile = fopen((argv[3]), "rb");
-	if (txtFile == NULL){				//open file for parsing the payload
-		cout << "Error, check file." << endl;
-		exit(1);
-	}
 	
 	bool endOfFileHasBeenReached = false;
 	
@@ -130,7 +119,7 @@ int main(int argc, char ** argv){
 	seqNumLog.open("seqNumLog.log", fstream::out);
 	
 	// file input character
-	char fileInput = getc(txtFile);
+	int fileInput = getc(txtFile);
 
 	// never-ending while loop
 	while(true) {
@@ -146,7 +135,7 @@ int main(int argc, char ** argv){
 			seekOffset = 30 * nextSequenceNumberSliding;
 			fseek(txtFile,seekOffset,SEEK_SET);
 			memset(data,0,sizeof(data));
-			packetSize = 0;
+			fileSize = 0;
 			for (int i = 0; i < 30; i++) {
 				
 				fileInput = getc(txtFile);
@@ -157,12 +146,12 @@ int main(int argc, char ** argv){
 				} else {
 					data[i] = fileInput;
 					endOfFileHasBeenReached = false;
-					packetSize = packetSize + 1;
+					fileSize = fileSize + 1;
 				}
 			}
 			
 			// attempt to send packet
-			class packet packetOutgoing(1, nextSequenceNumber, packetSize, data);
+			class packet packetOutgoing(1, nextSequenceNumber, fileSize, data);
 			packetOutgoing.serialize(packet);
 			if (sendto(destinationSocket, packet, sizeof(packet), 0, (struct sockaddr*)&destinationServer, destinationServerLength) <= -1) {
 				perror("failed to send packet.\n");
@@ -178,7 +167,7 @@ int main(int argc, char ** argv){
 			// logging
 			seqNumLog << nextSequenceNumber << '\n';
 			nextSequenceNumber = (nextSequenceNumber + 1) % (N + 1);
-			nextSequenceNumberSliding = nextSequenceNumberSliding + 1;
+			sendSizeMin = sendSizeMin + 1;
 		}
 		
 		if (packetTimerRecordedTime > -1) {
@@ -194,11 +183,11 @@ int main(int argc, char ** argv){
 					
 					nextSequenceNumberSliding = nextSequenceNumberSliding - N;
 					nextSequenceNumber = nextSequenceNumberSliding % 8;
-					fseek(txtFile, seekOffset, SEEK_SET);
-					seekOffset = 30 * nextSequenceNumberSliding;
+					fseek(txtFile, sequenceNumberOffset, SEEK_SET);
+					sequenceNumberOffset = 30 * nextSequenceNumberSliding;
 					
 					memset(data, 0, sizeof(data));
-					packetSize = 0;
+					fileSize = 0;
 					for (int y = 0; y < 30; y++) {
 						fileInput = getc(txtFile);
 						if (fileInput == EOF) {
@@ -207,12 +196,12 @@ int main(int argc, char ** argv){
 						} else {
 							data[y] = fileInput;
 							endOfFileHasBeenReached = false;
-							packetSize = packetSize + 1;
+							fileSize = fileSize + 1;
 						}
 					}
 					
 					// attempt to send packet
-					class packet packetOutgoing(1, nextSequenceNumber, packetSize, data);
+					class packet packetOutgoing(1, nextSequenceNumber, fileSize, data);
 					packetOutgoing.serialize(packet);
 					if (sendto(destinationSocket, packet, sizeof(packet), 0, (struct sockaddr*)&destinationServer, destinationServerLength) <= -1) {
 						perror("failed to send packet.\n");

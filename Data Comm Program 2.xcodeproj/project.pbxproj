@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5AC427F01E7891C000AEC608 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC427EC1E7891C000AEC608 /* client.cpp */; };
 		5AC427F11E7891C000AEC608 /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC427ED1E7891C000AEC608 /* server.cpp */; };
-		5AC427F21E7891C000AEC608 /* packet.h in Sources */ = {isa = PBXBuildFile; fileRef = 5AC427EE1E7891C000AEC608 /* packet.h */; };
 		5AC427F31E7891C000AEC608 /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC427EF1E7891C000AEC608 /* packet.cpp */; };
 /* End PBXBuildFile section */
 
@@ -124,7 +123,6 @@
 			files = (
 				5AC427F01E7891C000AEC608 /* client.cpp in Sources */,
 				5AC427F11E7891C000AEC608 /* server.cpp in Sources */,
-				5AC427F21E7891C000AEC608 /* packet.h in Sources */,
 				5AC427F31E7891C000AEC608 /* packet.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
