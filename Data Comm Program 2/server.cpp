@@ -38,19 +38,19 @@ int main(int argc, const char ** argv) {
 	}
 	
 	// set up ports
-	int recv_port = atoi(argv[2]);
-	int send_port = atoi(argv[3]);
+	int receivingPort = atoi(argv[2]);
+	int sendingPort = atoi(argv[3]);
 	
 	// sockets
-	int recv_socket;
-	int send_socket;
+	int receivingSocket;
+	int sendingSocket;
 	
 	// set up connection
 	struct sockaddr_in destination;
 	memset((char *)&destination, 0, sizeof(destination));
 	destination.sin_family = AF_INET;
 	bcopy((char *)destinationIP->h_addr, (char *)&destination.sin_addr.s_addr, destinationIP->h_length);
-	destination.sin_port = htons(send_port);
+	destination.sin_port = htons(sendingPort);
 	socklen_t destination_len = sizeof(destination);
 	destination_len = sizeof destination;
 	
@@ -60,20 +60,20 @@ int main(int argc, const char ** argv) {
 	socklen_t incoming_len;
 	incoming_len = sizeof incoming;
 	incoming.sin_family = AF_INET;
-	incoming.sin_port = htons(recv_port);
+	incoming.sin_port = htons(receivingPort);
 	incoming.sin_addr.s_addr = htonl(INADDR_ANY);
 	
 	//Create Sockets
-	int err_check;
+	int errorCheck;
 	
-	send_socket = socket(AF_INET, SOCK_DGRAM, 0);
-	if (send_socket <= -1) {
+	sendingSocket = socket(AF_INET, SOCK_DGRAM, 0);
+	if (sendingSocket <= -1) {
 		perror("Could not open socket for sending file!\n");
 		exit(EXIT_FAILURE);
 	}
-	recv_socket = socket(AF_INET, SOCK_DGRAM, 0);
-	err_check = bind(recv_socket, (sockaddr *)&incoming, incoming_len);
-	if (recv_socket <= -1 || err_check <= -1){
+	receivingSocket = socket(AF_INET, SOCK_DGRAM, 0);
+	errorCheck = bind(receivingSocket, (sockaddr *)&incoming, incoming_len);
+	if (receivingSocket <= -1 || errorCheck <= -1){
 		perror("Could not open socket for receiving acknowledgements!");
 		exit(EXIT_FAILURE);
 	}
@@ -105,7 +105,7 @@ int main(int argc, const char ** argv) {
 		memset(packet_buffer, 0, 128);
 		memset(data, 0, 32);
 		
-		recvfrom(recv_socket, packet_buffer, sizeof packet_buffer, 0, (struct sockaddr *)&incoming, &incoming_len);
+		recvfrom(receivingSocket, packet_buffer, sizeof packet_buffer, 0, (struct sockaddr *)&incoming, &incoming_len);
 		incoming_packet.deserialize(packet_buffer);
 		
 		//Record the sequence number of the received packet in arrival.log
@@ -123,7 +123,7 @@ int main(int argc, const char ** argv) {
 					//ACK packet
 					packet ack_packet(0, incoming_seqnum, 0, 0);
 					ack_packet.serialize(ack_buffer);
-					sendto(send_socket, ack_buffer, sizeof ack_buffer, 0, (struct sockaddr*)&destination, destination_len);
+					sendto(sendingSocket, ack_buffer, sizeof ack_buffer, 0, (struct sockaddr*)&destination, destination_len);
 					
 					//write the incoming data to the file
 					packet_data = incoming_packet.getData();
@@ -141,7 +141,7 @@ int main(int argc, const char ** argv) {
 					packet ack_packet(0, highest_inorder, 0, 0);
 					memset(packet_buffer, 0, 128);
 					ack_packet.serialize(packet_buffer);
-					sendto(send_socket, packet_buffer, sizeof packet_buffer, 0, (struct sockaddr*)&destination, destination_len);
+					sendto(sendingSocket, packet_buffer, sizeof packet_buffer, 0, (struct sockaddr*)&destination, destination_len);
 				}
 				
 				endTransmission = false;
@@ -153,7 +153,7 @@ int main(int argc, const char ** argv) {
 				packet eot_packet(2, expected_seqnum, 0, 0);
 				memset(packet_buffer, 0, 64);
 				eot_packet.serialize(packet_buffer);
-				sendto(send_socket, packet_buffer, sizeof packet_buffer, 0, (struct sockaddr*)&destination, destination_len);
+				sendto(sendingSocket, packet_buffer, sizeof packet_buffer, 0, (struct sockaddr*)&destination, destination_len);
 				endTransmission = true;
 				break;
 			}
@@ -170,7 +170,7 @@ int main(int argc, const char ** argv) {
 	//Done. Close things up and return.
 	arrival.close();
 	textfile.close();
-	close(recv_socket);
-	close(send_socket);
+	close(receivingSocket);
+	close(sendingSocket);
 	return 0;
 }
