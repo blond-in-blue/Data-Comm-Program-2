@@ -5,7 +5,7 @@
 //  Created by Hunter Holder and Chandler Dill on 3/10/17.
 //
 
-#include "packet.h"
+#include "packet.cpp"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>

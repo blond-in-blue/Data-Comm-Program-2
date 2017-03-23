@@ -7,23 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5A3B93851E839ADB00752B51 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280B1E7F656D00AEC608 /* makefile */; };
-		5A3B93861E839AEC00752B51 /* packet.h in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280E1E7F656D00AEC608 /* packet.h */; };
-		5AC428131E7F656D00AEC608 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC428071E7F656D00AEC608 /* client.cpp */; };
-		5AC428141E7F656D00AEC608 /* client.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC428081E7F656D00AEC608 /* client.o */; };
-		5AC428161E7F656D00AEC608 /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280D1E7F656D00AEC608 /* packet.cpp */; };
-		5AC428171E7F656D00AEC608 /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC428101E7F656D00AEC608 /* server.cpp */; };
-		5AC428181E7F656D00AEC608 /* server.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC428111E7F656D00AEC608 /* server.o */; };
+		5A3B93891E839CD600752B51 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC428071E7F656D00AEC608 /* client.cpp */; };
+		5A3B938A1E839CD600752B51 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280B1E7F656D00AEC608 /* makefile */; };
+		5A3B938B1E839CD600752B51 /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280D1E7F656D00AEC608 /* packet.cpp */; };
+		5A3B938C1E839CD600752B51 /* packet.h in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280E1E7F656D00AEC608 /* packet.h */; };
+		5A3B938D1E839CD600752B51 /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC428101E7F656D00AEC608 /* server.cpp */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		5A3B938F1E839F1C00752B51 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.c;
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# <com.apple.compilers.gcc>\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		5AF238D81E73A0A400C0AAD9 /* CopyFiles */ = {
+		5AF238D81E73A0A400C0AAD9 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -31,16 +42,13 @@
 /* Begin PBXFileReference section */
 		5A3B93821E839AAF00752B51 /* Data Comm Program 2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Data Comm Program 2"; sourceTree = "<group>"; };
 		5AC428071E7F656D00AEC608 /* client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = client.cpp; path = "Data Comm Program 2/client.cpp"; sourceTree = "<group>"; };
-		5AC428081E7F656D00AEC608 /* client.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = client.o; path = "Data Comm Program 2/client.o"; sourceTree = "<group>"; };
 		5AC428091E7F656D00AEC608 /* emulator */ = {isa = PBXFileReference; lastKnownFileType = file; name = emulator; path = "Data Comm Program 2/emulator"; sourceTree = "<group>"; };
 		5AC4280A1E7F656D00AEC608 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = file.txt; path = "Data Comm Program 2/file.txt"; sourceTree = "<group>"; };
 		5AC4280B1E7F656D00AEC608 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = makefile; path = "Data Comm Program 2/makefile"; sourceTree = "<group>"; };
 		5AC4280C1E7F656D00AEC608 /* output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = output.txt; path = "Data Comm Program 2/output.txt"; sourceTree = "<group>"; };
 		5AC4280D1E7F656D00AEC608 /* packet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = packet.cpp; path = "Data Comm Program 2/packet.cpp"; sourceTree = "<group>"; };
 		5AC4280E1E7F656D00AEC608 /* packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = packet.h; path = "Data Comm Program 2/packet.h"; sourceTree = "<group>"; };
-		5AC4280F1E7F656D00AEC608 /* server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = server; path = "Data Comm Program 2/server"; sourceTree = "<group>"; };
 		5AC428101E7F656D00AEC608 /* server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = server.cpp; path = "Data Comm Program 2/server.cpp"; sourceTree = "<group>"; };
-		5AC428111E7F656D00AEC608 /* server.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = server.o; path = "Data Comm Program 2/server.o"; sourceTree = "<group>"; };
 		5AC428121E7F656D00AEC608 /* Supporting files */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Supporting files"; path = "Data Comm Program 2/Supporting files"; sourceTree = "<group>"; };
 		5AF238DA1E73A0A400C0AAD9 /* Data Comm Program 2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Data Comm Program 2"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -50,8 +58,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AC428181E7F656D00AEC608 /* server.o in Frameworks */,
-				5AC428141E7F656D00AEC608 /* client.o in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,16 +68,13 @@
 			isa = PBXGroup;
 			children = (
 				5AC428071E7F656D00AEC608 /* client.cpp */,
-				5AC428081E7F656D00AEC608 /* client.o */,
 				5AC428091E7F656D00AEC608 /* emulator */,
 				5AC4280A1E7F656D00AEC608 /* file.txt */,
 				5AC4280B1E7F656D00AEC608 /* makefile */,
 				5AC4280C1E7F656D00AEC608 /* output.txt */,
 				5AC4280D1E7F656D00AEC608 /* packet.cpp */,
 				5AC4280E1E7F656D00AEC608 /* packet.h */,
-				5AC4280F1E7F656D00AEC608 /* server */,
 				5AC428101E7F656D00AEC608 /* server.cpp */,
-				5AC428111E7F656D00AEC608 /* server.o */,
 				5A3B93821E839AAF00752B51 /* Data Comm Program 2 */,
 				5AC428121E7F656D00AEC608 /* Supporting files */,
 				5AF238DB1E73A0A400C0AAD9 /* Products */,
@@ -95,9 +98,10 @@
 			buildPhases = (
 				5AF238D61E73A0A400C0AAD9 /* Sources */,
 				5AF238D71E73A0A400C0AAD9 /* Frameworks */,
-				5AF238D81E73A0A400C0AAD9 /* CopyFiles */,
+				5AF238D81E73A0A400C0AAD9 /* Copy Files */,
 			);
 			buildRules = (
+				5A3B938F1E839F1C00752B51 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -143,11 +147,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A3B93861E839AEC00752B51 /* packet.h in Sources */,
-				5A3B93851E839ADB00752B51 /* makefile in Sources */,
-				5AC428161E7F656D00AEC608 /* packet.cpp in Sources */,
-				5AC428171E7F656D00AEC608 /* server.cpp in Sources */,
-				5AC428131E7F656D00AEC608 /* client.cpp in Sources */,
+				5A3B93891E839CD600752B51 /* client.cpp in Sources */,
+				5A3B938A1E839CD600752B51 /* makefile in Sources */,
+				5A3B938B1E839CD600752B51 /* packet.cpp in Sources */,
+				5A3B938C1E839CD600752B51 /* packet.h in Sources */,
+				5A3B938D1E839CD600752B51 /* server.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
