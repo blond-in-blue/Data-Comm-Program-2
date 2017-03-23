@@ -1,10 +1,10 @@
-all: client server packet
+all: client server
 	
 client: client.o
-	g++ client.cpp -o client
+	g++ client.cpp packet.cpp -o client
+
 server: server.o
-	g++ server.cpp -o server
-packet: packet.o
-	g++ packet.cpp -o packet
+	g++ server.cpp packet.cpp -o server
+
 clean:
-	\rm *.o client server packet
+	\rm *.o client server
