@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A3B93851E839ADB00752B51 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280B1E7F656D00AEC608 /* makefile */; };
+		5A3B93861E839AEC00752B51 /* packet.h in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280E1E7F656D00AEC608 /* packet.h */; };
 		5AC428131E7F656D00AEC608 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC428071E7F656D00AEC608 /* client.cpp */; };
 		5AC428141E7F656D00AEC608 /* client.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC428081E7F656D00AEC608 /* client.o */; };
-		5AC428151E7F656D00AEC608 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280B1E7F656D00AEC608 /* makefile */; };
 		5AC428161E7F656D00AEC608 /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4280D1E7F656D00AEC608 /* packet.cpp */; };
 		5AC428171E7F656D00AEC608 /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC428101E7F656D00AEC608 /* server.cpp */; };
 		5AC428181E7F656D00AEC608 /* server.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC428111E7F656D00AEC608 /* server.o */; };
@@ -28,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A3B93821E839AAF00752B51 /* Data Comm Program 2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Data Comm Program 2"; sourceTree = "<group>"; };
 		5AC428071E7F656D00AEC608 /* client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = client.cpp; path = "Data Comm Program 2/client.cpp"; sourceTree = "<group>"; };
 		5AC428081E7F656D00AEC608 /* client.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = client.o; path = "Data Comm Program 2/client.o"; sourceTree = "<group>"; };
 		5AC428091E7F656D00AEC608 /* emulator */ = {isa = PBXFileReference; lastKnownFileType = file; name = emulator; path = "Data Comm Program 2/emulator"; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				5AC4280F1E7F656D00AEC608 /* server */,
 				5AC428101E7F656D00AEC608 /* server.cpp */,
 				5AC428111E7F656D00AEC608 /* server.o */,
+				5A3B93821E839AAF00752B51 /* Data Comm Program 2 */,
 				5AC428121E7F656D00AEC608 /* Supporting files */,
 				5AF238DB1E73A0A400C0AAD9 /* Products */,
 			);
@@ -140,8 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A3B93861E839AEC00752B51 /* packet.h in Sources */,
+				5A3B93851E839ADB00752B51 /* makefile in Sources */,
 				5AC428161E7F656D00AEC608 /* packet.cpp in Sources */,
-				5AC428151E7F656D00AEC608 /* makefile in Sources */,
 				5AC428171E7F656D00AEC608 /* server.cpp in Sources */,
 				5AC428131E7F656D00AEC608 /* client.cpp in Sources */,
 			);
