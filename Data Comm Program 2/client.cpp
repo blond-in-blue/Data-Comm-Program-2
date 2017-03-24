@@ -35,34 +35,29 @@ using namespace std;
 int main(int argc, char ** argv) {
 	
 	// socket to me, baby
-	// destination socket is used sending packets
-	int destinationSocket = socket(AF_INET, SOCK_DGRAM, 0);
+	int destinationSocket = socket(AF_INET, SOCK_DGRAM, 0); // destination socket is used sending packets
 	if (destinationSocket <= -1) {
 		perror("failed to open destination socket");
 		exit(EXIT_FAILURE);
 	}
-	// retrieval socket is used for acks
-	int retrievalSocket = socket(AF_INET, SOCK_DGRAM, 0);
+	int retrievalSocket = socket(AF_INET, SOCK_DGRAM, 0);	// retrieval socket is used for acks
 	if (retrievalSocket <= -1) {
 		perror("failed to open retrieval socket");
 		exit(EXIT_FAILURE);
 	}
 	
-	// ports
 	int sendingPort = atoi(argv[2]);
-	int receivingPort = atoi(argv[3]);
+	int receivingPort = atoi(argv[3]);	//port setup for those sweet sockets
 	
-	struct hostent *s;			//holds IP address
+	struct hostent *s;				//holds IP address
 	s = gethostbyname(argv[1]);
 	if (s == NULL) {
 		fprintf(stderr, "- error: hostname does not exist");	//quick error checking
 		exit(EXIT_FAILURE);
 	}
 	
-	// set up connection
 	struct sockaddr_in destinationServer;
-	// setting destination info
-	memset((char *)&destinationServer, 0, sizeof(destinationServer));
+	memset((char *)&destinationServer, 0, sizeof(destinationServer));	//setting up destination info
 	destinationServer.sin_family = AF_INET;
 	bcopy((char *)s->h_addr, (char *)&destinationServer.sin_addr.s_addr, s->h_length);
 	destinationServer.sin_port = htons(sendingPort);
@@ -75,19 +70,16 @@ int main(int argc, char ** argv) {
 	retrievalServer.sin_addr.s_addr = htonl(INADDR_ANY);
 	socklen_t retrievalServerLength = sizeof(retrievalServerLength);
 	
-	// variables to keep track of GBN
-	int outstandingPackets = 0;
+	int outstandingPackets = 0;		//keep up with those unacked packets, yeah?
 	int nextSequenceNumber = 0;
 	int ackNumber = 0;
 	int expectedAckNumber = 0;
 	int seekOffset = 0;
-	int sequenceNumberOffset = 0;
+	int sequenceNumberOffset = 0;		//ack number and file offset vars
 	int counter = 0;
 	
-	
-	// packet setup
 	clock_t packetTimer = -1;
-	float packetTimerRecordedTime = 0.00;
+	float packetTimerRecordedTime = 0.00;	//packet timer and packet buffer info
 	char data[32] = "0";
 	char packet[128] = "0";
 	int fileSize = 0;
@@ -95,10 +87,8 @@ int main(int argc, char ** argv) {
 	class packet receivingPacket(0, 0, sizeof(data), data);
 	class packet lastReceivingPacket(0, 0, sizeof(data), data);
 	
-	
-	// file stuff
 	FILE * txtFile;
-	txtFile = fopen((argv[4]), "r");
+	txtFile = fopen((argv[4]), "r");		//open that file you wanna read (Who is Brick?)
 	if (txtFile == NULL) {
 		cout << "error: specified file couldn't be opened." << endl;
 		exit(1);
@@ -106,26 +96,19 @@ int main(int argc, char ** argv) {
 	fseek(txtFile, 0, SEEK_END);
 	
 	bool endOfFileHasBeenReached = false;
-	
-	// sliding window stuff
-	int nextSequenceNumberTotal = 0;
+	int nextSequenceNumberTotal = 0;		//window vars and eof
 	int sendSizeMin = 0;
 	
-	// logging
 	fstream ackLog, seqNumLog;
-	ackLog.open("ackLog.log", fstream::out);
+	ackLog.open("ackLog.log", fstream::out);		//open the files for logging
 	seqNumLog.open("seqNumLog.log", fstream::out);
-	
-	// file input character
 	int fileInput = getc(txtFile);
 	
-	// never-ending while loop
-	while (true) {
+	while (true) {							//THE WHILE LOOP OF DOOM
 		
 		while (nextSequenceNumberTotal < (sendSizeMin + N)) {
 
-			// break out of while if EOF
-			if (endOfFileHasBeenReached == true) {
+			if (endOfFileHasBeenReached == true) {		//eof? breakout.
 				break;
 			}
 			seekOffset = 30 * nextSequenceNumberTotal;
@@ -134,38 +117,31 @@ int main(int argc, char ** argv) {
 			memset(data, 0, sizeof(data));
 			fileSize = 0;
 			
-			for (int i = 0; i < 30; i++) {
-				
+			for (int i = 0; i < 30; i++) {		//getting data for sending packet
 				fileInput = getc(txtFile);
-				
 				if (fileInput == EOF) {
 					endOfFileHasBeenReached = true;
 					break;
 				}
 				else {
 					data[i] = fileInput;
-					// needs to be set at least once, so why not every time? :^)
-					endOfFileHasBeenReached = false;
+					endOfFileHasBeenReached = false;	// needs to be set at least once, so why not every time? :^)
 					fileSize = fileSize + 1;
 				}
 			}
 			
-			// attempt to send packet
-			class packet packetOutgoing(1, nextSequenceNumber, fileSize, data);
+			class packet packetOutgoing(1, nextSequenceNumber, fileSize, data);		//sending the packets of data
 			packetOutgoing.serialize(packet);
 			if (sendto(destinationSocket, packet, sizeof(packet), 0, (struct sockaddr*)&destinationServer, destinationServerLength) <= -1) {
-				perror("failed to send packet.\n");
+				perror("failed to send packet.\n");				//check if success
 				exit(EXIT_FAILURE);
 			}
 			
-			// start timer
-			if (outstandingPackets == 0) {
+			if (outstandingPackets == 0) {		//we just sent!!! start timer!!!
 				packetTimer = clock();
 			}
 			outstandingPackets = outstandingPackets + 1;
-			
-			// logging
-			seqNumLog << nextSequenceNumber << '\n';
+			seqNumLog << nextSequenceNumber << '\n';			//log that seqnum and increment
 			nextSequenceNumber = (nextSequenceNumber + 1) % (8);
 			nextSequenceNumberTotal = nextSequenceNumberTotal + 1;
 		}
@@ -175,15 +151,13 @@ int main(int argc, char ** argv) {
 			
 			if (packetTimerRecordedTime >= TIMEOUTLIMIT) {
 				perror("timeout limit has been reached");
-				// reinitialize timer
-				packetTimer = clock();
+				packetTimer = clock();						//reinit clock
 				
 				for (int x = 0; x < N; x++) {
 					memset(data, 0, 32);
 					memset(packet, 0, 128);
 					
-					// set back sequence number to resend previous N packets
-					nextSequenceNumberTotal = nextSequenceNumberTotal - N;
+					nextSequenceNumberTotal = nextSequenceNumberTotal - N;	// set back sequence number to resend previous N packets
 					nextSequenceNumber = nextSequenceNumberTotal % (8);
 					fseek(txtFile, sequenceNumberOffset, SEEK_SET);
 					sequenceNumberOffset = 30 * nextSequenceNumberTotal;
@@ -192,54 +166,43 @@ int main(int argc, char ** argv) {
 					fileSize = 0;
 					
 					for (int y = 0; y < 30; y++) {
-						
-						fileInput = getc(txtFile);
-						
+						fileInput = getc(txtFile);				//fill in next packet's data
 						if (fileInput == EOF) {
-							endOfFileHasBeenReached = true;
+							endOfFileHasBeenReached = true;		//check EOF
 							break;
 						}
 						else {
 							data[y] = fileInput;
-							// needs to be set at least once, so why not every time? :^)
-							endOfFileHasBeenReached = false;
+							endOfFileHasBeenReached = false;	// needs to be set at least once, so why not every time? :^)
 							fileSize = fileSize + 1;
 						}
 					}
 					
-					// attempt to send packet
-					class packet packetOutgoing(1, nextSequenceNumber, fileSize, data);
+					class packet packetOutgoing(1, nextSequenceNumber, fileSize, data);		// needs to be set at least once, so why not every time? :^)
 					packetOutgoing.serialize(packet);
 					if (sendto(destinationSocket, packet, sizeof(packet), 0, (struct sockaddr*)&destinationServer, destinationServerLength) <= -1) {
 						perror("failed to send packet.\n");
 						exit(EXIT_FAILURE);
 					}
 					
-					// logging
-					seqNumLog << nextSequenceNumber << '\n';
+					seqNumLog << nextSequenceNumber << '\n';			//log that new seqnum
 					nextSequenceNumber = (nextSequenceNumber + 1) % (8);
 					nextSequenceNumberTotal = nextSequenceNumberTotal + 1;
 					sendSizeMin = sendSizeMin + 1;
-					
 				}
 			}
 		}
-		
-		// check if transmission is complete
-		if (endOfFileHasBeenReached) {
+		if (endOfFileHasBeenReached) {		//EOT?? Kill transmission
 			break;
 		}
 		
-		// create timer to deal with ack time-outs
-		struct timeval recvTimer;
+		struct timeval recvTimer;		//timer to deal with ack timeouts
 		
-		// in seconds
-		recvTimer.tv_sec = 2;
+		recvTimer.tv_sec = 2;		//seconds
 		recvTimer.tv_usec = 0;
 		setsockopt(retrievalSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&recvTimer, sizeof(recvTimer));
 		
-		// packet receival
-		fprintf(stderr, " %d ", outstandingPackets);
+		fprintf(stderr, " %d ", outstandingPackets);		//receiving packets/acks
 		recvfrom(retrievalSocket, packet, sizeof(packet), 0, (struct sockaddr *)&retrievalServer, &retrievalServerLength);
 		lastReceivingPacket.deserialize(packet);
 
@@ -264,8 +227,7 @@ int main(int argc, char ** argv) {
 		}
 	}
 	
-	// end of transmission
-	class packet eotPacket(3, nextSequenceNumber, 0, NULL);
+	class packet eotPacket(3, nextSequenceNumber, 0, NULL);		// end of transmission
 	eotPacket.serialize(packet);
 	sendto(destinationSocket, packet, sizeof(packet), 0, (struct sockaddr *)&destinationServer, destinationServerLength);
 	
@@ -276,9 +238,8 @@ int main(int argc, char ** argv) {
 	eotPacket.deserialize(packet);
 
 	ackNumber = eotPacket.getSeqNum();
-	ackLog << ackNumber << '\n';
+	ackLog << ackNumber << '\n';			//logging those acks and we're almost done
 	
-	// finishing up
 	fclose(txtFile);
 	seqNumLog.close();
 	ackLog.close();
