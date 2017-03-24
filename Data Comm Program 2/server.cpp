@@ -116,7 +116,7 @@ int main(int argc, const char ** argv) {
 					nextSequenceNumber = (nextSequenceNumber + 1) % SEQNUMAMOUNT; //next correct sequence number please
 				}
 				else {
-					keepLooking = (nextSequenceNumber + 7) % 8;
+					keepLooking = (nextSequenceNumber + 7) % SEQNUMAMOUNT;
 					packet incorrectAcknowledgementPacket(0, keepLooking, 0, NULL);	//this is when its data but not what we wanted
 					memset(outgoingAcksWindow, 0, 128);
 					incorrectAcknowledgementPacket.serialize(outgoingAcksWindow);
