@@ -110,8 +110,8 @@ int main(int argc, const char ** argv) {
 					sendto(sendingSocket, outgoingAcksWindow, sizeof outgoingAcksWindow, 0, (struct sockaddr*)&destination, sizeDestination);
 
 					dataInPacket = incomingPacket.getData();
-					for(int n=0; n<(incomingPacket.getLength()); n++){	//write the data from the packet to file after ack is sent
-						fileStream << dataInPacket[n];
+					for(int k=0; k<(incomingPacket.getLength()); n++){	//write the data from the packet to file after ack is sent
+						fileStream << dataInPacket[k];
 					}
 					nextSequenceNumber = (nextSequenceNumber + 1) % SEQNUMAMOUNT; //next correct sequence number please
 				}
