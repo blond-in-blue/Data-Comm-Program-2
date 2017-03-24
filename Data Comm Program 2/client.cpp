@@ -163,7 +163,7 @@ int main(int argc, char ** argv) {
 			
 			// logging
 			seqNumLog << nextSequenceNumber << '\n';
-			nextSequenceNumber = (nextSequenceNumber + 1) % (N + 1);
+			nextSequenceNumber = (nextSequenceNumber + 1) % (8);
 			sendSizeMin = sendSizeMin + 1;
 		}
 		
@@ -208,7 +208,7 @@ int main(int argc, char ** argv) {
 					
 					// logging
 					seqNumLog << nextSequenceNumber << '\n';
-					nextSequenceNumber = (nextSequenceNumber + 1) % (N + 1);
+					nextSequenceNumber = (nextSequenceNumber + 1) % (8);
 					nextSequenceNumberSliding = nextSequenceNumberSliding + 1;
 					
 				}
@@ -230,7 +230,7 @@ int main(int argc, char ** argv) {
 		ackLog << ackNumber << '\n';
 		
 		if (ackNumber == expectedAckNumber) {
-			expectedAckNumber = (expectedAckNumber + 1) % (N + 1);
+			expectedAckNumber = (expectedAckNumber + 1) % (8);
 			outstandingPackets = outstandingPackets - 1;
 			sendSizeMin = sendSizeMin + 1;
 			if (outstandingPackets > 0) {
@@ -240,14 +240,14 @@ int main(int argc, char ** argv) {
 		}
 		else {
 			nextSequenceNumberSliding = counter;
-			nextSequenceNumber = (ackNumber + 1) % (N + 1);
+			nextSequenceNumber = (ackNumber + 1) % (8);
 			sendSizeMin = sendSizeMin - 1;
 			outstandingPackets = 0;
 		}
 	}
 	
 	// end of transmission
-	class packet eotPacket(3, nextSequenceNumber, 0, 0);
+	class packet eotPacket(3, nextSequenceNumber, 0, NULL);
 	eotPacket.serialize(packet);
 	sendto(destinationSocket, packet, sizeof(packet), 0, (struct sockaddr *)&destinationServer, destinationServerLength);
 	
