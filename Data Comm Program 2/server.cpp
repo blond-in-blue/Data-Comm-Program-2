@@ -116,14 +116,12 @@ int main(int argc, const char ** argv) {
 					nextSequenceNumber = (nextSequenceNumber + 1) % SEQNUMAMOUNT; //next correct sequence number please
 				}
 				else {
-					/*FUUUUUUUUUUUUUUUUCK*/
 					keepLooking = (nextSequenceNumber + 7) % 8;
-					packet incorrectAcknowledgementPacket(0, keepLooking, 0, NULL);
+					packet incorrectAcknowledgementPacket(0, keepLooking, 0, NULL);	//this is when its data but not what we wanted
 					memset(outgoingAcksWindow, 0, 128);
 					incorrectAcknowledgementPacket.serialize(outgoingAcksWindow);
 					sendto(sendingSocket, outgoingAcksWindow, sizeof outgoingAcksWindow, 0, (struct sockaddr*)&destination, sizeDestination);
 				}
-				/*FUUUUUUUUUUUUUUUUUCK*/
 			}
 			else if(typePacket == 3){
 				packet killSignal(2, nextSequenceNumber, 0, NULL);		//sending the transmissionKill packet for EOT because, basically anything other than fileContents
