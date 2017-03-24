@@ -33,6 +33,7 @@ using namespace std;
 // arg3: <receiveFromEmulator: UDP port number used by the client to receive ACKs from the emulator>
 // arg4: <fileName: name of the file to be transferred>
 int main(int argc, char ** argv) {
+	
 	// socket to me, baby
 	// destination socket is used sending packets
 	int destinationSocket = socket(AF_INET, SOCK_DGRAM, 0);
@@ -96,7 +97,6 @@ int main(int argc, char ** argv) {
 	
 	
 	// file stuff
-	char * chunksArray;
 	FILE * txtFile;
 	txtFile = fopen((argv[4]), "r");
 	if (txtFile == NULL) {
@@ -108,7 +108,7 @@ int main(int argc, char ** argv) {
 	bool endOfFileHasBeenReached = false;
 	
 	// sliding window stuff
-	int nextSequenceNumberSliding = 0;
+	int nextSequenceNumberTotal = 0;
 	int sendSizeMin = 0;
 	
 	// logging
@@ -122,16 +122,18 @@ int main(int argc, char ** argv) {
 	// never-ending while loop
 	while (true) {
 		
-		
-		while (nextSequenceNumberSliding < (sendSizeMin + N)) {
+		while (nextSequenceNumberTotal < (sendSizeMin + N)) {
+
 			// break out of while if EOF
 			if (endOfFileHasBeenReached == true) {
 				break;
 			}
-			seekOffset = 30 * nextSequenceNumberSliding;
+			seekOffset = 30 * nextSequenceNumberTotal;
 			fseek(txtFile, seekOffset, SEEK_SET);
+			
 			memset(data, 0, sizeof(data));
 			fileSize = 0;
+			
 			for (int i = 0; i < 30; i++) {
 				
 				fileInput = getc(txtFile);
@@ -142,6 +144,7 @@ int main(int argc, char ** argv) {
 				}
 				else {
 					data[i] = fileInput;
+					// needs to be set at least once, so why not every time? :^)
 					endOfFileHasBeenReached = false;
 					fileSize = fileSize + 1;
 				}
@@ -164,7 +167,7 @@ int main(int argc, char ** argv) {
 			// logging
 			seqNumLog << nextSequenceNumber << '\n';
 			nextSequenceNumber = (nextSequenceNumber + 1) % (8);
-			sendSizeMin = sendSizeMin + 1;
+			nextSequenceNumberTotal = nextSequenceNumberTotal + 1;
 		}
 		
 		if (packetTimerRecordedTime > -1) {
@@ -180,15 +183,18 @@ int main(int argc, char ** argv) {
 					memset(packet, 0, 128);
 					
 					// set back sequence number to resend previous N packets
-					nextSequenceNumberSliding = nextSequenceNumberSliding - N;
-					nextSequenceNumber = nextSequenceNumberSliding % (8);
+					nextSequenceNumberTotal = nextSequenceNumberTotal - N;
+					nextSequenceNumber = nextSequenceNumberTotal % (8);
 					fseek(txtFile, sequenceNumberOffset, SEEK_SET);
-					sequenceNumberOffset = 30 * nextSequenceNumberSliding;
+					sequenceNumberOffset = 30 * nextSequenceNumberTotal;
 					
 					memset(data, 0, sizeof(data));
 					fileSize = 0;
+					
 					for (int y = 0; y < 30; y++) {
+						
 						fileInput = getc(txtFile);
+						
 						if (fileInput == EOF) {
 							endOfFileHasBeenReached = true;
 							break;
@@ -212,14 +218,15 @@ int main(int argc, char ** argv) {
 					// logging
 					seqNumLog << nextSequenceNumber << '\n';
 					nextSequenceNumber = (nextSequenceNumber + 1) % (8);
-					nextSequenceNumberSliding = nextSequenceNumberSliding + 1;
+					nextSequenceNumberTotal = nextSequenceNumberTotal + 1;
+					sendSizeMin = sendSizeMin + 1;
 					
 				}
 			}
 		}
 		
 		// check if transmission is complete
-		if (endOfFileHasBeenReached == true && outstandingPackets <= 0) {
+		if (endOfFileHasBeenReached) {
 			break;
 		}
 		
@@ -231,16 +238,16 @@ int main(int argc, char ** argv) {
 		recvTimer.tv_usec = 0;
 		setsockopt(retrievalSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&recvTimer, sizeof(recvTimer));
 		
-		
 		// packet receival
-		memset(packet, 0, 64);
-		
+		fprintf(stderr, " %d ", outstandingPackets);
 		recvfrom(retrievalSocket, packet, sizeof(packet), 0, (struct sockaddr *)&retrievalServer, &retrievalServerLength);
 		lastReceivingPacket.deserialize(packet);
 
 		ackNumber = lastReceivingPacket.getSeqNum();
 		ackLog << ackNumber << '\n';
+		printf("%d", ackNumber);
 		
+		// if this sequence number is greater than what we're currently waiting for, then go ahead and confirm all packets through that number
 		if (ackNumber == expectedAckNumber) {
 			expectedAckNumber = (expectedAckNumber + 1) % (8);
 			outstandingPackets = outstandingPackets - 1;
@@ -251,10 +258,9 @@ int main(int argc, char ** argv) {
 			counter = counter + 1;
 		}
 		else {
-			nextSequenceNumberSliding = counter;
+			nextSequenceNumberTotal = counter;
 			nextSequenceNumber = (ackNumber + 1) % (8);
 			sendSizeMin = sendSizeMin - 1;
-			outstandingPackets = 0;
 		}
 	}
 	
@@ -265,9 +271,10 @@ int main(int argc, char ** argv) {
 	
 	seqNumLog << nextSequenceNumber << '\n';
 	
+
 	recvfrom(retrievalSocket, packet, sizeof(packet), 0, (struct sockaddr *)&retrievalServer, &retrievalServerLength);
 	eotPacket.deserialize(packet);
-	
+
 	ackNumber = eotPacket.getSeqNum();
 	ackLog << ackNumber << '\n';
 	
@@ -276,7 +283,6 @@ int main(int argc, char ** argv) {
 	seqNumLog.close();
 	ackLog.close();
 	close(destinationSocket);
-	close(retrievalSocket);
-	free(chunksArray);	//clean up of socket, buffer, and stream
+	close(retrievalSocket); //clean up socket, buffer, and stream
 	return 0;
 };

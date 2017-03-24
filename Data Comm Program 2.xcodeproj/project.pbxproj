@@ -45,7 +45,6 @@
 		5AC428091E7F656D00AEC608 /* emulator */ = {isa = PBXFileReference; lastKnownFileType = file; name = emulator; path = "Data Comm Program 2/emulator"; sourceTree = "<group>"; };
 		5AC4280A1E7F656D00AEC608 /* file.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = file.txt; path = "Data Comm Program 2/file.txt"; sourceTree = "<group>"; };
 		5AC4280B1E7F656D00AEC608 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = makefile; path = "Data Comm Program 2/makefile"; sourceTree = "<group>"; };
-		5AC4280C1E7F656D00AEC608 /* output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = output.txt; path = "Data Comm Program 2/output.txt"; sourceTree = "<group>"; };
 		5AC4280D1E7F656D00AEC608 /* packet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = packet.cpp; path = "Data Comm Program 2/packet.cpp"; sourceTree = "<group>"; };
 		5AC4280E1E7F656D00AEC608 /* packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = packet.h; path = "Data Comm Program 2/packet.h"; sourceTree = "<group>"; };
 		5AC428101E7F656D00AEC608 /* server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = server.cpp; path = "Data Comm Program 2/server.cpp"; sourceTree = "<group>"; };
@@ -71,7 +70,6 @@
 				5AC428091E7F656D00AEC608 /* emulator */,
 				5AC4280A1E7F656D00AEC608 /* file.txt */,
 				5AC4280B1E7F656D00AEC608 /* makefile */,
-				5AC4280C1E7F656D00AEC608 /* output.txt */,
 				5AC4280D1E7F656D00AEC608 /* packet.cpp */,
 				5AC4280E1E7F656D00AEC608 /* packet.h */,
 				5AC428101E7F656D00AEC608 /* server.cpp */,
