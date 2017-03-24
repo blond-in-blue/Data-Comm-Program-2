@@ -37,7 +37,7 @@ int main(int argc, const char ** argv) {
 	char fileContents[32];
 	int typePacket;
 	char* dataInPacket;
-	packet incomingPacket(NULL, NULL, NULL, fileContents);	//das incoming packet buffer and info
+	packet incomingPacket(0, 0, 0, fileContents);	//das incoming packet buffer and info
 	char incomingPacketWindow[128];
 	char outgoingAcksWindow[128];
 
@@ -110,7 +110,7 @@ int main(int argc, const char ** argv) {
 					sendto(sendingSocket, outgoingAcksWindow, sizeof outgoingAcksWindow, 0, (struct sockaddr*)&destination, sizeDestination);
 
 					dataInPacket = incomingPacket.getData();
-					for(int k=0; k<(incomingPacket.getLength()); n++){	//write the data from the packet to file after ack is sent
+					for(int k=0; k<(incomingPacket.getLength()); k++){	//write the data from the packet to file after ack is sent
 						fileStream << dataInPacket[k];
 					}
 					nextSequenceNumber = (nextSequenceNumber + 1) % SEQNUMAMOUNT; //next correct sequence number please
