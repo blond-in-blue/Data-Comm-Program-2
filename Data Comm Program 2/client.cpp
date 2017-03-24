@@ -33,7 +33,7 @@ using namespace std;
 // arg3: <receiveFromEmulator: UDP port number used by the client to receive ACKs from the emulator>
 // arg4: <fileName: name of the file to be transferred>
 int main(int argc, char ** argv) {
-	// sockets
+	// socket to me, baby
 	// destination socket is used sending packets
 	int destinationSocket = socket(AF_INET, SOCK_DGRAM, 0);
 	if (destinationSocket <= -1) {
@@ -172,14 +172,16 @@ int main(int argc, char ** argv) {
 			
 			if (packetTimerRecordedTime >= TIMEOUTLIMIT) {
 				perror("timeout limit has been reached");
+				// reinitialize timer
 				packetTimer = clock();
 				
 				for (int x = 0; x < N; x++) {
 					memset(data, 0, 32);
 					memset(packet, 0, 128);
 					
+					// set back sequence number to resend previous N packets
 					nextSequenceNumberSliding = nextSequenceNumberSliding - N;
-					nextSequenceNumber = nextSequenceNumberSliding % 8;
+					nextSequenceNumber = nextSequenceNumberSliding % (8);
 					fseek(txtFile, sequenceNumberOffset, SEEK_SET);
 					sequenceNumberOffset = 30 * nextSequenceNumberSliding;
 					
@@ -193,6 +195,7 @@ int main(int argc, char ** argv) {
 						}
 						else {
 							data[y] = fileInput;
+							// needs to be set at least once, so why not every time? :^)
 							endOfFileHasBeenReached = false;
 							fileSize = fileSize + 1;
 						}
@@ -219,6 +222,15 @@ int main(int argc, char ** argv) {
 		if (endOfFileHasBeenReached == true && outstandingPackets <= 0) {
 			break;
 		}
+		
+		// create timer to deal with ack time-outs
+		struct timeval recvTimer;
+		
+		// in seconds
+		recvTimer.tv_sec = 2;
+		recvTimer.tv_usec = 0;
+		setsockopt(retrievalSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&recvTimer, sizeof(recvTimer));
+		
 		
 		// packet receival
 		memset(packet, 0, 64);
