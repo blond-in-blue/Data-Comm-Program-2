@@ -91,8 +91,8 @@ int main(int argc, char ** argv) {
 	char packet[128] = "0";
 	int fileSize = 0;
 	memset(data, 0, sizeof(data));
-	class packet receivingPacket(0, 0, 0, data);
-	class packet lastReceivingPacket(0, 0, 0, data);
+	class packet receivingPacket(0, 0, sizeof(data), data);
+	class packet lastReceivingPacket(0, 0, sizeof(data), data);
 	
 	
 	// file stuff
